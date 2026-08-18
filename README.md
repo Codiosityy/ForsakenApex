@@ -4,13 +4,14 @@ RRDB-based single-image restoration network (5.997M parameters) that upscales an
 
 ## Results
 
-### Performance vs. Bicubic Baseline
+### Performance
 
-| Metric | Bicubic | Forsaken Apex | Improvement |
-|--------|---------|---------------|-------------|
-| PSNR (dB) | 23.28 | **28.58** | +5.30 |
-| SSIM | 0.555 | **0.777** | +0.221 |
-| Sharpness | 63% of GT | **50.5%** (Laplacian) | — |
+| Metric | Value |
+|--------|-------|
+| PSNR (dB) | 28.47 |
+| SSIM | 0.767 |
+| LPIPS | 0.164 |
+| Sharpness | 50.5% of GT |
 
 Evaluated on 320 full-resolution validation images.
 
