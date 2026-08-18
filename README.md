@@ -50,35 +50,25 @@ Higher PSNR indicates better image reconstruction quality:
 
 ### Enhancement Process
 
-The model restores degraded images through a multi-stage pipeline:
-
 ```mermaid
 flowchart LR
-    A[Noisy Input] --> B[Feature Extraction]
-    B --> C[8x RRDB Blocks]
-    C --> D[PixelShuffle 2x Upsample]
-    D --> E[Residual Learning]
-    E --> F[Clean Output]
+    A[Noisy Input] --> B[Feature Extraction] --> C[8x RRDB] --> D[PixelShuffle 2x] --> E[Residual] --> F[Clean Output]
 ```
 
 ### Model Architecture
 
 ```mermaid
 flowchart TD
-    A[Input 1, H, W] --> B[Head Conv2d 1, 64, 3]
-    B --> C[Body 8x RRDB blocks]
-    C --> D[Body Tail Conv2d 64, 64, 3]
-    D --> E{Global Residual}
-    B --> E
-    E --> F[Upsample 2x PixelShuffle]
-    E --> G[Noise Head - unused at inference]
-    F --> H[HR Conv2d 64, 64 + LeakyReLU]
-    H --> I[Output Conv2d 64, 1, 3]
-    I --> J[Bicubic Upsample of Input]
-    J --> K[Add Residual]
-    I --> K
-    K --> L[Clamp 0, 1]
-    L --> M[Output 1, 2H, 2W]
+    A[Input] --> B[Head Conv2d]
+    B --> C[8x RRDB Blocks]
+    C --> D[Body Tail + Global Residual]
+    D --> E[PixelShuffle 2x]
+    D --> F[Noise Head]
+    E --> G[HR Conv + LeakyReLU]
+    G --> H[Output Conv]
+    H --> I[Add Bicubic Residual]
+    I --> J[Clamp 0-1]
+    J --> K[Output 2x Resolution]
 ```
 
 | Parameter | Value |
