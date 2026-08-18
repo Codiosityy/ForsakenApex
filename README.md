@@ -1,4 +1,4 @@
-# AI-Based Restoration of Degraded Images — Forsaken Apex
+# AI-Based Restoration of Degraded Images : Forsaken Apex
 
 RRDB-based single-image restoration network (5.997M parameters) that upscales and denoises degraded grayscale inputs by 2x.
 
@@ -24,11 +24,11 @@ Evaluated on 320 full-resolution validation images.
 
 ### Result Examples
 
-**Success Case** — clean texture recovery, minimal artifacts:
+**Success Case** : clean texture recovery, minimal artifacts:
 
 ![Success Case](success_case.png)
 
-**Failure Case** — some over-smoothing in high-frequency detail regions:
+**Failure Case** : some over-smoothing in high-frequency detail regions:
 
 ![Failure Case](failure_case.png)
 
@@ -80,7 +80,7 @@ Output (1, 2H, 2W)
 
 ### Base Training (100 epochs)
 
-- **Loss:** Composite — Charbonnier (w=1.0) + Gradient (w=0.1) + Physics Consistency (w=0.1) + SSIM (w=0.2) + LPIPS (w=0.05) + Blind Spot (w=0.05)
+- **Loss:** Composite : Charbonnier (w=1.0) + Gradient (w=0.1) + Physics Consistency (w=0.1) + SSIM (w=0.2) + LPIPS (w=0.05) + Blind Spot (w=0.05)
 - **Optimizer:** AdamW (lr=2e-4, betas=(0.9, 0.99), weight_decay=1e-4)
 - **Scheduler:** CosineAnnealingLR (T_max=100)
 - **Batch size:** 16 effective (4 × 4 gradient accumulation)
@@ -92,7 +92,7 @@ Output (1, 2H, 2W)
 
 | Stage | Epochs | Change | PSNR | Decision |
 |-------|--------|--------|------|----------|
-| Base | 100 | — | 28.58 dB | Baseline |
+| Base | 100 | : | 28.58 dB | Baseline |
 | Exp 1 | 15 | clip=False in degradation | 28.60 dB | ✅ Accepted |
 | Exp 2 | 7 | w_grad=0.4, w_lpips=0.25 | ~26.7 dB | ❌ Rejected |
 | Exp 2b (final) | 9 | w_grad=0.2, w_lpips=0.12 | 28.47 dB | ✅ Accepted |
@@ -119,8 +119,8 @@ models/restoration_best.pt
 python run.py <input-dir> <output-dir>
 ```
 
-- `<input-dir>` — directory containing `.npy` degraded images (grayscale, float `[0,1]` or uint8 `[0,255]`)
-- `<output-dir>` — directory where restored `.npy` files are written
+- `<input-dir>` : directory containing `.npy` degraded images (grayscale, float `[0,1]` or uint8 `[0,255]`)
+- `<output-dir>` : directory where restored `.npy` files are written
 
 Output images are saved as float32 `.npy` files with values in `[0, 1]`, shape `(H, W)` where `H = 2 * input_h` and `W = 2 * input_w`.
 
