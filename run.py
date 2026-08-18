@@ -5,6 +5,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from PIL import Image
 
 
 # ─── Model Architecture ───────────────────────────────────────────────────────
@@ -132,6 +133,8 @@ def main():
             out = np.clip(out, 0.0, 1.0).astype(np.float32)
             out_path = os.path.join(output_dir, os.path.basename(fp))
             np.save(out_path, out)
+            png_path = os.path.join(output_dir, os.path.basename(fp).replace(".npy", ".png"))
+            Image.fromarray((out * 255).astype(np.uint8)).save(png_path)
 
     if nan_count:
         print(f"WARNING: {nan_count}/{len(input_files)} images had NaN/Inf — possible fp16 overflow in checkpoint")
