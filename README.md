@@ -48,50 +48,37 @@ Higher PSNR indicates better image reconstruction quality:
 
 ## Architecture
 
-### SEM Image Enhancement Process
+### Enhancement Process
 
-The model restores degraded SEM (Scanning Electron Microscope) images through a multi-stage pipeline:
+The model restores degraded images through a multi-stage pipeline:
 
-![Enhancement Process](img-enhance-process.png)
-
-1. **Input** : Noisy SEM micrograph with speckle artifacts
-2. **Feature Extraction** : Initial convolutional processing block
-3. **RRDB Blocks** : 8 Residual-in-Residual Dense Blocks for deep feature learning
-4. **Sub-pixel Upsampling** : PixelShuffle rearranges data to higher resolution
-5. **Output** : Clean, sharp, high-resolution SEM image
+```mermaid
+flowchart LR
+    A[Noisy Input] --> B[Feature Extraction]
+    B --> C[8x RRDB Blocks]
+    C --> D[PixelShuffle 2x Upsample]
+    D --> E[Residual Learning]
+    E --> F[Clean Output]
+```
 
 ### Model Architecture
 
-```
-Input (1, H, W)
-    |
-    v
-Head: Conv2d(1, 64, 3)
-    |
-    v
-Body: 8 x RRDB blocks
-  +-- each RRDB = 3 x DenseBlock
-       +-- DenseBlock = 5 Conv layers, dense concatenation (gc=32), residual scaling 0.2
-    |
-    v
-Body Tail: Conv2d(64, 64, 3) + global residual
-    |
-    +------------------------------+
-    v                              v
-Upsample (2x)                Noise Head (aux, unused at inference)
-  Conv2d(64, 256) -> PixelShuffle(2)
-    |
-    v
-HR Conv: Conv2d(64, 64) + LeakyReLU
-    |
-    v
-Output Conv: Conv2d(64, 1, 3) -> residual
-    |
-    v
-Final: clamp(bicubic_upsample(input) + residual, 0, 1)
-    |
-    v
-Output (1, 2H, 2W)
+```mermaid
+flowchart TD
+    A[Input 1, H, W] --> B[Head Conv2d 1, 64, 3]
+    B --> C[Body 8x RRDB blocks]
+    C --> D[Body Tail Conv2d 64, 64, 3]
+    D --> E{Global Residual}
+    B --> E
+    E --> F[Upsample 2x PixelShuffle]
+    E --> G[Noise Head - unused at inference]
+    F --> H[HR Conv2d 64, 64 + LeakyReLU]
+    H --> I[Output Conv2d 64, 1, 3]
+    I --> J[Bicubic Upsample of Input]
+    J --> K[Add Residual]
+    I --> K
+    K --> L[Clamp 0, 1]
+    L --> M[Output 1, 2H, 2W]
 ```
 
 | Parameter | Value |
