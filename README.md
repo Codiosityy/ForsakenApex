@@ -2,6 +2,18 @@
 
 RRDB-based single-image restoration network (5.997M parameters) that upscales and denoises degraded grayscale inputs by 2x.
 
+## Wiki
+
+Detailed documentation is available in the [Wiki](https://github.com/Codiosityy/ForsakenApex/wiki):
+
+| Section | Pages |
+|---------|-------|
+| **Architecture** | [Overview](https://github.com/Codiosityy/ForsakenApex/wiki/overview) · [RestorationNet](https://github.com/Codiosityy/ForsakenApex/wiki/restoration_net) · [DenseBlock](https://github.com/Codiosityy/ForsakenApex/wiki/dense_block) · [RRDB](https://github.com/Codiosityy/ForsakenApex/wiki/rrdb) · [PixelShuffle](https://github.com/Codiosityy/ForsakenApex/wiki/pixel_shuffle_upsample) |
+| **Training** | [Configuration](https://github.com/Codiosityy/ForsakenApex/wiki/configuration) · [Data Handling](https://github.com/Codiosityy/ForsakenApex/wiki/data_handling) |
+| **Inference** | [Guide](https://github.com/Codiosityy/ForsakenApex/wiki/loading_models) |
+| **Evaluation** | [Metrics](https://github.com/Codiosityy/ForsakenApex/wiki/metrics) · [Results](https://github.com/Codiosityy/ForsakenApex/wiki/results) |
+| **Reference** | [Model Files](https://github.com/Codiosityy/ForsakenApex/wiki/available_models) · [Dev Setup](https://github.com/Codiosityy/ForsakenApex/wiki/environment_setup) · [Quick Start](https://github.com/Codiosityy/ForsakenApex/wiki/quickstart) |
+
 ## Results
 
 ### Performance
