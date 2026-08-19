@@ -26,8 +26,6 @@ Evaluated on 320 full-resolution validation images.
 
 RestorationNet vs. bicubic and standard AI baseline across PSNR, SSIM, and throughput:
 
-![Benchmark Comparison](Benchmark.png)
-
 ![Benchmark Detailed](Benchmark-2.png)
 
 ### PSNR Comparison
